@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KI-Maturitäts-Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 60px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .intro {
+            font-size: 15px;
+            color: #5a6c7d;
+            margin-bottom: 60px;
+            line-height: 1.7;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section:last-of-type {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e8ebed;
+            letter-spacing: -0.01em;
+        }
+
+        .section-intro {
+            font-size: 15px;
+            color: #5a6c7d;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .field-group {
+            margin-bottom: 40px;
+        }
+
+        .field-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .required {
+            color: #95a5a6;
+            font-weight: 400;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 15px;
+            border: 1px solid #d1d8dd;
+            border-radius: 4px;
+            background: #ffffff;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #7f8c9a;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px 14px;
+            font-size: 15px;
+            font-family: inherit;
+            line-height: 1.6;
+            border: 1px solid #d1d8dd;
+            border-radius: 4px;
+            background: #ffffff;
+            color: #2c3e50;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #7f8c9a;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 15px;
+            border: 1px solid #d1d8dd;
+            border-radius: 4px;
+            background: #ffffff;
+            color: #2c3e50;
+            transition: border-color 0.2s;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #7f8c9a;
+        }
+
+        .likert-group {
+            margin-bottom: 36px;
+        }
+
+        .likert-statement {
+            font-size: 15px;
+            color: #2c3e50;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .likert-scale {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .likert-option {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 8px;
+            border: 1px solid #d1d8dd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #ffffff;
+        }
+
+        .likert-option:hover {
+            border-color: #7f8c9a;
+            background: #f8f9fa;
+        }
+
+        .likert-option input[type="radio"] {
+            margin: 0 8px 0 0;
+            cursor: pointer;
+        }
+
+        .likert-option label {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            color: #5a6c7d;
+        }
+
+        .likert-option input[type="radio"]:checked + label {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            padding: 0 4px;
+        }
+
+        .scale-label {
+            font-size: 13px;
+            color: #95a5a6;
+        }
+
+        .hint {
+            font-size: 14px;
+            color: #95a5a6;
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        .conditional-field {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e8ebed;
+            display: none;
+        }
+
+        .conditional-field.visible {
+            display: block;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            background: #2c3e50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 40px;
+        }
+
+        button[type="submit"]:hover {
+            background: #1a252f;
+        }
+
+        button[type="submit"]:active {
+            background: #151e27;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 24px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 17px;
+            }
+
+            .likert-scale {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .likert-option {
+                width: 100%;
+                justify-content: flex-start;
+                padding: 12px 14px;
+            }
+
+            .scale-labels {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>KI-Maturitäts-Assessment</h1>
+        <p class="intro">
+            Dieses Assessment dient der strukturierten Erfassung Ihrer Einschätzungen zur aktuellen Position Ihrer Organisation im Kontext von Künstlicher Intelligenz. Es richtet sich an Führungskräfte und Entscheidungsträger und bildet die Grundlage für eine differenzierte Standortbestimmung.
+        </p>
+
+        <form id="assessment-form">
+
+            <!-- Abschnitt 1: Organisationskontext -->
+            <section class="section">
+                <h2 class="section-title">Organisationskontext</h2>
+
+                <div class="field-group">
+                    <label for="company-size">
+                        Unternehmensgrösse <span class="required">(Pflichtfeld)</span>
+                    </label>
+                    <select id="company-size" name="company_size" required>
+                        <option value="">Bitte wählen</option>
+                        <option value="less-50">weniger als 50 Mitarbeitende</option>
+                        <option value="50-249">50–249 Mitarbeitende</option>
+                        <option value="250-999">250–999 Mitarbeitende</option>
+                        <option value="1000-plus">1'000 oder mehr Mitarbeitende</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="role">
+                        Rolle der ausfüllenden Person <span class="required">(Pflichtfeld)</span>
+                    </label>
+                    <select id="role" name="role" required>
+                        <option value="">Bitte wählen</option>
+                        <option value="executive">Geschäftsleitung</option>
+                        <option value="board">Verwaltungsrat / Beirat</option>
+                        <option value="division-head">Bereichsleitung</option>
+                        <option value="other-leadership">Andere Führungsfunktion</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="industry">
+                        Branche <span class="required">(Pflichtfeld)</span>
+                    </label>
+                    <select id="industry" name="industry" required>
+                        <option value="">Bitte wählen</option>
+                        <option value="financial-services">Finanzdienstleistungen (Banken, Versicherungen, Vorsorge)</option>
+                        <option value="manufacturing">Industrie & Produktion</option>
+                        <option value="mem">Maschinen-, Elektro- & Metallindustrie (MEM)</option>
+                        <option value="construction">Bau, Immobilien & Infrastruktur</option>
+                        <option value="retail">Handel & E-Commerce</option>
+                        <option value="healthcare">Gesundheitswesen & Life Sciences</option>
+                        <option value="energy">Energie, Versorgung & Umwelt</option>
+                        <option value="logistics">Logistik, Transport & Mobilität</option>
+                        <option value="public-sector">Öffentliche Verwaltung & staatsnahe Organisationen</option>
+                        <option value="education">Bildung, Forschung & Wissenschaft</option>
+                        <option value="it-services">IT, Software & digitale Dienstleistungen</option>
+                        <option value="media">Medien, Kommunikation & Marketing</option>
+                        <option value="consulting">Beratung & professionelle Dienstleistungen</option>
+                        <option value="tourism">Tourismus, Hospitality & Freizeit</option>
+                        <option value="agriculture">Landwirtschaft & Lebensmittelindustrie</option>
+                        <option value="other">Andere Branche (bitte spezifizieren)</option>
+                    </select>
+
+                    <div id="industry-other-field" class="conditional-field">
+                        <label for="industry-other">
+                            Bitte beschreiben Sie Ihre Branche kurz
+                        </label>
+                        <textarea id="industry-other" name="industry_other" rows="3"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Abschnitt 2: Strategie & Führung -->
+            <section class="section">
+                <h2 class="section-title">Strategie & Führung</h2>
+                <p class="section-intro">
+                    Die folgenden Aussagen beziehen sich auf Führung, strategische Klarheit und den Umgang mit KI auf oberster Ebene.
+                </p>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Unsere Geschäftsleitung hat ein gemeinsames Verständnis davon, welche Rolle KI für die zukünftige Entwicklung unserer Organisation spielt.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-1-1" name="strategy_1" value="1" required>
+                            <label for="strategy-1-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-1-2" name="strategy_1" value="2">
+                            <label for="strategy-1-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-1-3" name="strategy_1" value="3">
+                            <label for="strategy-1-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-1-4" name="strategy_1" value="4">
+                            <label for="strategy-1-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-1-5" name="strategy_1" value="5">
+                            <label for="strategy-1-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        KI-Initiativen sind bei uns klar mit strategischen Zielen verknüpft und keine isolierten Einzelmassnahmen.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-2-1" name="strategy_2" value="1" required>
+                            <label for="strategy-2-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-2-2" name="strategy_2" value="2">
+                            <label for="strategy-2-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-2-3" name="strategy_2" value="3">
+                            <label for="strategy-2-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-2-4" name="strategy_2" value="4">
+                            <label for="strategy-2-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-2-5" name="strategy_2" value="5">
+                            <label for="strategy-2-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Verantwortung und Entscheidungsrechte im Umgang mit KI sind auf Führungsebene klar geregelt.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-3-1" name="strategy_3" value="1" required>
+                            <label for="strategy-3-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-3-2" name="strategy_3" value="2">
+                            <label for="strategy-3-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-3-3" name="strategy_3" value="3">
+                            <label for="strategy-3-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-3-4" name="strategy_3" value="4">
+                            <label for="strategy-3-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="strategy-3-5" name="strategy_3" value="5">
+                            <label for="strategy-3-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="strategy-freetext">
+                        Welche Spannungsfelder, Unsicherheiten oder offenen Fragen sehen Sie in Bezug auf Strategie und Führung?
+                    </label>
+                    <textarea id="strategy-freetext" name="strategy_freetext" rows="4"></textarea>
+                </div>
+            </section>
+
+            <!-- Abschnitt 3: Wertschöpfung & Use Cases -->
+            <section class="section">
+                <h2 class="section-title">Wertschöpfung & Use Cases</h2>
+                <p class="section-intro">
+                    Dieser Abschnitt betrachtet den Beitrag von KI zur Wertschöpfung.
+                </p>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Wir haben eine klare Vorstellung davon, in welchen Bereichen KI für uns den grössten Mehrwert schaffen kann.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="value-1-1" name="value_1" value="1" required>
+                            <label for="value-1-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-1-2" name="value_1" value="2">
+                            <label for="value-1-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-1-3" name="value_1" value="3">
+                            <label for="value-1-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-1-4" name="value_1" value="4">
+                            <label for="value-1-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-1-5" name="value_1" value="5">
+                            <label for="value-1-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        KI-Anwendungen werden bei uns nach geschäftlichem Nutzen priorisiert, nicht nach technologischer Machbarkeit.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="value-2-1" name="value_2" value="1" required>
+                            <label for="value-2-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-2-2" name="value_2" value="2">
+                            <label for="value-2-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-2-3" name="value_2" value="3">
+                            <label for="value-2-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-2-4" name="value_2" value="4">
+                            <label for="value-2-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-2-5" name="value_2" value="5">
+                            <label for="value-2-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Der Nutzen von KI-Initiativen wird systematisch überprüft und nicht nur initial angenommen.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="value-3-1" name="value_3" value="1" required>
+                            <label for="value-3-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-3-2" name="value_3" value="2">
+                            <label for="value-3-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-3-3" name="value_3" value="3">
+                            <label for="value-3-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-3-4" name="value_3" value="4">
+                            <label for="value-3-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="value-3-5" name="value_3" value="5">
+                            <label for="value-3-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="value-freetext">
+                        Wo sehen Sie aktuell ungenutztes Potenzial oder unklare Prioritäten?
+                    </label>
+                    <textarea id="value-freetext" name="value_freetext" rows="4"></textarea>
+                </div>
+            </section>
+
+            <!-- Abschnitt 4: Organisation & Kultur -->
+            <section class="section">
+                <h2 class="section-title">Organisation & Kultur</h2>
+                <p class="section-intro">
+                    Hier geht es um die organisationale Verankerung von KI.
+                </p>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Der Einsatz von KI wird organisationsweit abgestimmt und nicht nur in einzelnen Teams vorangetrieben.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="culture-1-1" name="culture_1" value="1" required>
+                            <label for="culture-1-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-1-2" name="culture_1" value="2">
+                            <label for="culture-1-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-1-3" name="culture_1" value="3">
+                            <label for="culture-1-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-1-4" name="culture_1" value="4">
+                            <label for="culture-1-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-1-5" name="culture_1" value="5">
+                            <label for="culture-1-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Mitarbeitende verstehen grundsätzlich, warum KI eingeführt wird und was dies für ihre Arbeit bedeutet.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="culture-2-1" name="culture_2" value="1" required>
+                            <label for="culture-2-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-2-2" name="culture_2" value="2">
+                            <label for="culture-2-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-2-3" name="culture_2" value="3">
+                            <label for="culture-2-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-2-4" name="culture_2" value="4">
+                            <label for="culture-2-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-2-5" name="culture_2" value="5">
+                            <label for="culture-2-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Veränderungen durch KI werden aktiv begleitet und nicht dem Zufall überlassen.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="culture-3-1" name="culture_3" value="1" required>
+                            <label for="culture-3-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-3-2" name="culture_3" value="2">
+                            <label for="culture-3-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-3-3" name="culture_3" value="3">
+                            <label for="culture-3-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-3-4" name="culture_3" value="4">
+                            <label for="culture-3-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="culture-3-5" name="culture_3" value="5">
+                            <label for="culture-3-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="culture-freetext">
+                        Wo erleben Sie aktuell Widerstände, Unsicherheiten oder kulturelle Spannungen?
+                    </label>
+                    <textarea id="culture-freetext" name="culture_freetext" rows="4"></textarea>
+                </div>
+            </section>
+
+            <!-- Abschnitt 5: Kompetenzen & Workforce -->
+            <section class="section">
+                <h2 class="section-title">Kompetenzen & Workforce</h2>
+                <p class="section-intro">
+                    Dieser Abschnitt betrachtet Fähigkeiten, Lernen und Befähigung.
+                </p>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Wir verfügen über ausreichende Kompetenzen, um KI sinnvoll zu nutzen und weiterzuentwickeln.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="competence-1-1" name="competence_1" value="1" required>
+                            <label for="competence-1-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-1-2" name="competence_1" value="2">
+                            <label for="competence-1-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-1-3" name="competence_1" value="3">
+                            <label for="competence-1-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-1-4" name="competence_1" value="4">
+                            <label for="competence-1-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-1-5" name="competence_1" value="5">
+                            <label for="competence-1-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Der Aufbau von KI-bezogenen Fähigkeiten ist systematisch geplant und nicht rein individuell.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="competence-2-1" name="competence_2" value="1" required>
+                            <label for="competence-2-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-2-2" name="competence_2" value="2">
+                            <label for="competence-2-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-2-3" name="competence_2" value="3">
+                            <label for="competence-2-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-2-4" name="competence_2" value="4">
+                            <label for="competence-2-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-2-5" name="competence_2" value="5">
+                            <label for="competence-2-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Führungskräfte fühlen sich befähigt, fundierte Entscheidungen im Kontext von KI zu treffen.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="competence-3-1" name="competence_3" value="1" required>
+                            <label for="competence-3-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-3-2" name="competence_3" value="2">
+                            <label for="competence-3-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-3-3" name="competence_3" value="3">
+                            <label for="competence-3-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-3-4" name="competence_3" value="4">
+                            <label for="competence-3-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="competence-3-5" name="competence_3" value="5">
+                            <label for="competence-3-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="competence-freetext">
+                        Welche Kompetenzen oder Fähigkeiten fehlen aktuell am stärksten?
+                    </label>
+                    <textarea id="competence-freetext" name="competence_freetext" rows="4"></textarea>
+                </div>
+            </section>
+
+            <!-- Abschnitt 6: Daten, Technologie & Architektur -->
+            <section class="section">
+                <h2 class="section-title">Daten, Technologie & Architektur</h2>
+                <p class="section-intro">
+                    Dieser Abschnitt betrachtet die daten- und technologiebezogene Basis.
+                </p>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Die Qualität und Verfügbarkeit unserer Daten ermöglicht grundsätzlich den sinnvollen Einsatz von KI.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="technology-1-1" name="technology_1" value="1" required>
+                            <label for="technology-1-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-1-2" name="technology_1" value="2">
+                            <label for="technology-1-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-1-3" name="technology_1" value="3">
+                            <label for="technology-1-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-1-4" name="technology_1" value="4">
+                            <label for="technology-1-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-1-5" name="technology_1" value="5">
+                            <label for="technology-1-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Unsere IT- und Datenarchitektur ist ausreichend anschlussfähig für KI-Anwendungen.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="technology-2-1" name="technology_2" value="1" required>
+                            <label for="technology-2-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-2-2" name="technology_2" value="2">
+                            <label for="technology-2-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-2-3" name="technology_2" value="3">
+                            <label for="technology-2-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-2-4" name="technology_2" value="4">
+                            <label for="technology-2-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-2-5" name="technology_2" value="5">
+                            <label for="technology-2-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Technologische Entscheidungen im KI-Kontext werden bewusst und nicht opportunistisch getroffen.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="technology-3-1" name="technology_3" value="1" required>
+                            <label for="technology-3-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-3-2" name="technology_3" value="2">
+                            <label for="technology-3-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-3-3" name="technology_3" value="3">
+                            <label for="technology-3-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-3-4" name="technology_3" value="4">
+                            <label for="technology-3-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="technology-3-5" name="technology_3" value="5">
+                            <label for="technology-3-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="technology-freetext">
+                        Wo sehen Sie aktuell die grössten daten- oder technologiebezogenen Hürden?
+                    </label>
+                    <textarea id="technology-freetext" name="technology_freetext" rows="4"></textarea>
+                </div>
+            </section>
+
+            <!-- Abschnitt 7: Governance, Ethik & Sicherheit -->
+            <section class="section">
+                <h2 class="section-title">Governance, Ethik & Sicherheit</h2>
+                <p class="section-intro">
+                    Zum Abschluss geht es um Leitplanken, Verantwortung und Vertrauen.
+                </p>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Es existieren klare Prinzipien oder Leitlinien für den verantwortungsvollen Einsatz von KI.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="governance-1-1" name="governance_1" value="1" required>
+                            <label for="governance-1-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-1-2" name="governance_1" value="2">
+                            <label for="governance-1-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-1-3" name="governance_1" value="3">
+                            <label for="governance-1-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-1-4" name="governance_1" value="4">
+                            <label for="governance-1-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-1-5" name="governance_1" value="5">
+                            <label for="governance-1-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Risiken in Bezug auf Datenschutz, Sicherheit und ethische Fragestellungen werden aktiv adressiert.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="governance-2-1" name="governance_2" value="1" required>
+                            <label for="governance-2-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-2-2" name="governance_2" value="2">
+                            <label for="governance-2-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-2-3" name="governance_2" value="3">
+                            <label for="governance-2-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-2-4" name="governance_2" value="4">
+                            <label for="governance-2-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-2-5" name="governance_2" value="5">
+                            <label for="governance-2-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="likert-group">
+                    <div class="likert-statement">
+                        Wir fühlen uns im Umgang mit regulatorischen Anforderungen im KI-Kontext ausreichend orientiert.
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" id="governance-3-1" name="governance_3" value="1" required>
+                            <label for="governance-3-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-3-2" name="governance_3" value="2">
+                            <label for="governance-3-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-3-3" name="governance_3" value="3">
+                            <label for="governance-3-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-3-4" name="governance_3" value="4">
+                            <label for="governance-3-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" id="governance-3-5" name="governance_3" value="5">
+                            <label for="governance-3-5">5</label>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">trifft überhaupt nicht zu</span>
+                        <span class="scale-label">trifft voll und ganz zu</span>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="governance-freetext">
+                        Welche offenen Fragen, Bedenken oder Unsicherheiten bestehen hier?
+                    </label>
+                    <textarea id="governance-freetext" name="governance_freetext" rows="4"></textarea>
+                </div>
+            </section>
+
+            <!-- Abschnitt 8: Kontakt -->
+            <section class="section">
+                <h2 class="section-title">Kontakt</h2>
+
+                <div class="field-group">
+                    <label for="email">
+                        E-Mail-Adresse <span class="required">(Pflichtfeld)</span>
+                    </label>
+                    <input type="email" id="email" name="email" required>
+                    <p class="hint">Die E-Mail-Adresse wird verwendet, um den Ergebnisreport bereitzustellen.</p>
+                </div>
+            </section>
+
+            <button type="submit">Assessment abschliessen</button>
+        </form>
+    </div>
+
+    <script>
+        // Conditional field logic for industry "other"
+        const industrySelect = document.getElementById('industry');
+        const industryOtherField = document.getElementById('industry-other-field');
+
+        industrySelect.addEventListener('change', function() {
+            if (this.value === 'other') {
+                industryOtherField.classList.add('visible');
+            } else {
+                industryOtherField.classList.remove('visible');
+            }
+        });
+
+        // Form submission handler
+        const assessmentForm = document.getElementById('assessment-form');
+
+        assessmentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Collect all form data
+            const formData = new FormData(this);
+            const assessmentData = {};
+
+            // Convert FormData to plain object
+            for (let [key, value] of formData.entries()) {
+                assessmentData[key] = value;
+            }
+
+            // Log data to console
+            console.log('Assessment Data:', assessmentData);
+            console.log('JSON Format:', JSON.stringify(assessmentData, null, 2));
+
+            // Simulate API call (placeholder)
+            /*
+            fetch('https://api.example.com/assessment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(assessmentData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+            */
+
+            // User feedback
+            alert('Vielen Dank. Ihre Antworten wurden erfasst und in der Konsole ausgegeben.');
+        });
+    </script>
+</body>
+</html>
